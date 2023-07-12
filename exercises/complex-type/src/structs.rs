@@ -2,14 +2,22 @@
 // Fix the error
 // Make it compile
 // Run test
+#[derive(Debug,Clone)]
 struct Person {
     name: String,
     age: u8,
     hobby: String
 }
+impl PartialEq for Person {
+    fn eq(&self, other: &Self) -> bool {
+        self.name == other.name
+    }
+    
+}
 fn exercise1() -> Person {
     let age = 30;
     // Hobby = Rust 
+    let h:Person=Person { name: ("Thai mew".to_string()), age: (6), hobby: String::from("Rust") };
     let p = Person {
         name: String::from("sunface"),
         age,
@@ -39,12 +47,12 @@ impl Agent {
 
     // Get the name of the person
     fn get_name(&self) -> &str {
-        todo!()
+        &self.name
     }
 
     // Get the age of the person
     fn get_age(&self) -> u32 {
-        todo!()
+        self.age
     }
 }
 
@@ -61,25 +69,25 @@ impl Calculator {
         Calculator { value: 0 }
     }
 
-    fn add(&self, num: i32) {
+    fn add(&mut self, num: i32) {
         self.value += num;
     }
 
-    fn subtract(mut self, num: i32) {
+    fn subtract(&mut self, num: i32) {
         self.value -= num;
     }
-    fn clear(self) {
+    fn clear(&mut self) {
         self.value = 0;
     }
 
-    fn get_value(self) -> i32 {
+    fn get_value(&self) -> i32 {
         self.value
     }
 }
 
 // Exercise 4
 // Make it compile
-#[derive(Debug)]
+#[derive(Debug,Clone)]
 struct User {
     first: String,
     last: String,
@@ -92,11 +100,10 @@ fn exercise4() {
         last: String::from("Doe"),
         age: 22,
     };
-
+    let u3=u1.clone();
     let u2 = User {
         first: String::from("Mary"),
-        ..u1
-        
+        ..u3
     };
 
     println!("user: {:#?}", u1);
@@ -105,6 +112,7 @@ fn exercise4() {
 
 // Exercise 5
 // Make it compile
+#[derive(Debug,Clone)]
 struct Foo {
     str_val: String,
     int_val: i32,
@@ -120,19 +128,17 @@ fn exercise5() {
         str_val: "twenty".to_string(),
         int_val: 20,
     });
+    let moved = foos[0].clone();
 
     
-    let moved = foos[0];
-
-    
-    let moved_field = foos[0].str_val;
+    let moved_field = foos[0].str_val.clone();
 }
 
 // Exercise 6
 // Structs contain data, but can also have logic. In this exercise we have
 // defined the Package struct and we want to test some logic attached to it.
 // Make the code compile and the tests pass!
-
+use std::ops::Not;
 #[derive(Debug)]
 struct Package {
     sender_country: String,
@@ -140,6 +146,14 @@ struct Package {
     weight_in_grams: i32,
 }
 
+impl PartialEq for Package {
+    fn eq(&self, other: &Self) -> bool {
+        self.sender_country == other.sender_country;
+        self.recipient_country == other.recipient_country;
+        self.weight_in_grams == other.weight_in_grams
+    }
+    
+}
 impl Package {
     fn new(sender_country: String, recipient_country: String, weight_in_grams: i32) -> Package {
         if weight_in_grams <= 0 {
@@ -153,12 +167,12 @@ impl Package {
         }
     }
 
-    fn is_international(&self) -> ??? {
-        // Something goes here...
+    fn is_international(&self) -> bool {
+        self.sender_country != self.recipient_country
     }
 
-    fn get_fees(&self, cents_per_gram: i32) -> ??? {
-        // Something goes here...
+    fn get_fees(&self, cents_per_gram: i32) -> i32 {
+        self.weight_in_grams*cents_per_gram
     }
 }
 
