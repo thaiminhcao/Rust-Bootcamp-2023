@@ -52,23 +52,25 @@ fn exercise3() {
 // Implementing logic
 // Run tests
 
-fn find_max<T>(collection: &[T]) -> Option<&T> {
-    todo!()
+fn find_max<T:Ord>(collection: &[T]) -> Option<&T> {
+    collection.iter().max()
+
 }
 
 // Exercise 5 
 // Reverse the elements in a collection
 // Make it compile 
 // Run tests 
-fn reverse_collection<T>(collection: &[T]) {
-    todo!()
+use std::cmp::Reverse;
+fn reverse_collection<T:Ord>(collection: &mut [T]) {
+    collection.reverse()
 }
 
 
 // Exercise 6
 // Function to check if a collection contains a specific value
-fn contains_value<T>(collection: &[T], value: &T) -> bool {
-    todo!()
+fn contains_value<T: std::cmp::PartialEq>(collection: &[T], value: &T) -> bool {
+    collection.contains(value)
 }
 
 // Unit tests

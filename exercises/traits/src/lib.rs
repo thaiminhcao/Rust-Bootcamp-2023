@@ -14,18 +14,29 @@ trait Hello {
 
 //TODO 
 struct Student {
+
 }
 impl Hello for Student {
     fn say_hi(&self) -> String {
-        Student::say_something(self)
+        "hi".to_string()
+        
     }
+    fn say_something(&self) -> String {
+        String::from("I'm a good student")
+        
+    }
+    
 }
 //TODO
 struct Teacher {
 }
 impl Hello for Teacher {
     fn say_hi(&self) -> String {
-        Teacher::say_something(self)
+        "Hi, I'm your new teacher".to_string()
+        
+    }
+    fn say_something(&self) -> String {
+        "I'm not a bad teacher".to_string()
     }
 }
 
